@@ -16,13 +16,13 @@ class ChatBar extends Component {
   }
   contentChange = (event) => {
     this.setState({content: event.target.value});
-  }
+  };
   onSubmit = (event) => {
     if (event.key === 'Enter') {
       this.props.addMessage(this.state);
-      this.setState({content: ''})
+      this.setState({content: ''});
     }
-  }
+  };
 
   render() {
     return (
