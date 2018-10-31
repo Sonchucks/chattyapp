@@ -16,27 +16,27 @@ const server = express()
 const wss = new SocketServer({ server });
 
 
-wss.broadcast = function broadcast(data) {
-  wss.clients.forEach(function each(client) {
-    if (client.readyState === SocketServer.OPEN) {
-      client.send(data);
-    }
-  });
-};
-
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
+
+  wss.broadcast = function broadcast(data) {
+    wss.clients.forEach(function each(client) {
+      client.send(JSON.stringify(data));
+      console.log('data sent to client from server');
+    });
+  };
+
   ws.on('message', function incoming(message) {
-    const receivedMsg = JSON.parse(message);
-    receivedMsg.id = uuid();
+    const incomingMsg = JSON.parse(message);
+    incomingMsg.id = uuid();
 
-    console.log(receivedMsg);
+    console.log(incomingMsg);
 
-    wss.broadcast(receivedMsg);
+    wss.broadcast(incomingMsg);
   });
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => console.log('Client disconnected'));

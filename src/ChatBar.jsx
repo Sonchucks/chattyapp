@@ -23,6 +23,11 @@ class ChatBar extends Component {
       this.setState({content: ''});
     }
   };
+  newName = (event) => {
+    if (event.key === 'Enter') {
+      this.props.newUser(this.state.username);
+    }
+  };
 
   render() {
     return (
@@ -32,6 +37,7 @@ class ChatBar extends Component {
             type='text'
             value={this.state.username}
             onChange={this.nameChange}
+            onKeyPress={this.newName}
           />
           <input
             className="chatbar-message"
