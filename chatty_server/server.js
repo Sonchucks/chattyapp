@@ -1,37 +1,65 @@
-// server.js
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuid = require('uuid');
 
-// Set the port to 3001
 const PORT = 3001;
 
-// Create a new express server
 const server = express()
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
-  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
+  .listen(PORT, '0.0.0.0', 'localhost', () =>
+    console.log(`Listening on ${ PORT }`)
+    );
 
-// Create the WebSockets server
 const wss = new SocketServer({ server });
+
+let clients = {};
+
+const randomColor = () => {
+  const hexVar = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
+  let hexColor = [0, 0, 0, 0, 0, 0, 0];
+
+  hexColor = hexColor.map(hexCode => hexVar[Math.floor(Math.random() * 16)]);
+  hexColor[0] = '#';
+  return hexColor.join('');
+};
+
+const addNewClient = ( ws, username = 'Anonymous' ) => {
+  const clientID = uuid();
+  ws.clientID = clientID;
+  clients[clientID] = {
+    ws,
+    username,
+    color: randomColor(),
+  };
+};
+
+
+const removeClient = ( ws ) => {
+  const clientID = ws.clientID;
+  console.log(clientID);
+  delete clients[clientID];
+};
+
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    client.send(JSON.stringify(data));
+  });
+};
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  let clients = {
+
+  let numberOfClients = {
     type: "numberOfClients",
-    users: wss.clients.size,
-  };
-  wss.broadcast = function broadcast(data) {
-    wss.clients.forEach(function each(client) {
-      client.send(JSON.stringify(data));
-      console.log('data sent to client from server');
-    });
+    users: Object.keys(clients).length + 1,
   };
 
-  wss.broadcast(clients);
+  addNewClient(ws);
+  console.log(numberOfClients)
+  wss.broadcast(numberOfClients);
 
   ws.on('message', function incoming(message) {
     const receivedMsg = JSON.parse(message);
@@ -55,11 +83,12 @@ wss.on('connection', (ws) => {
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     console.log('Client disconnected');
-    let clients = {
+    removeClient(ws);
+    let numberOfClients = {
       type: "numberOfClients",
-      users: wss.clients.size,
+      users: Object.keys(clients).length + 1,
     };
-    wss.broadcast(clients);
+    wss.broadcast(numberOfClients);
   });
 
 });
