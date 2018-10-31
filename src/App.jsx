@@ -8,8 +8,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {username: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {username: ""},
       messages: [],
+      users: 0,
     };
     if (this.state.currentUser.username === "") {
       this.state.currentUser.username = "Anonymous";
@@ -26,30 +27,17 @@ class App extends Component {
       switch(receivedMsg.type) {
         case "incomingMessage":
           this.setState({messages: messages});
-          // handle incoming message
-          console.log(this.state.messages);
           break;
         case "incomingNotification":
           this.setState({messages: messages});
-          // handle incoming notification
-          console.log(this.state.messages);
+          break;
+        case "numberOfClients":
+          this.setState({users: receivedMsg.users});
           break;
         default:
-          // show an error in the console if the message type is unknown
           console.log("Unknown event type " + receivedMsg.type);
       }
     };
-
-
-
-    // this.socket.onmessage = (event) => {
-    //   const info = this.state;
-    //   const receivedMsg = JSON.parse(event.data);
-    //   const messages = [...this.state.messages, receivedMsg];
-
-    //   this.setState({messages: messages});
-    //   console.log(this.state)
-    // };
   }
 
   addMessage = (message) => {
@@ -74,6 +62,7 @@ class App extends Component {
   render() {
     const currentUser = this.state.currentUser.username;
     const message = this.state.messages;
+    const users = this.state.users;
 
     let messages;
     if (this.state.loading) {
@@ -86,6 +75,7 @@ class App extends Component {
     <div>
       <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
+        <span className="users-online">Users Online: {users}</span>
       </nav>
       <main className="messages">
         {messages}
