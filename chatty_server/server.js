@@ -33,10 +33,8 @@ const addNewClient = ( ws, username = 'Anonymous' ) => {
   };
 };
 
-
 const removeClient = ( ws ) => {
   const clientID = ws.clientID;
-  console.log(clientID);
   delete clients[clientID];
 };
 
@@ -58,22 +56,21 @@ wss.on('connection', (ws) => {
   };
 
   addNewClient(ws);
-  console.log(numberOfClients)
   wss.broadcast(numberOfClients);
 
   ws.on('message', function incoming(message) {
+    const userColor = clients[ws.clientID].color;
     const receivedMsg = JSON.parse(message);
     receivedMsg.id = uuid();
 
     switch (receivedMsg.type) {
       case 'postMessage':
         receivedMsg.type = "incomingMessage";
-        console.log(receivedMsg);
+        receivedMsg.color = userColor;
         wss.broadcast(receivedMsg);
         break;
       case 'postNotification':
         receivedMsg.type = "incomingNotification";
-        console.log(receivedMsg);
         wss.broadcast(receivedMsg);
         break;
       default:
@@ -86,7 +83,7 @@ wss.on('connection', (ws) => {
     removeClient(ws);
     let numberOfClients = {
       type: "numberOfClients",
-      users: Object.keys(clients).length + 1,
+      users: Object.keys(clients).length,
     };
     wss.broadcast(numberOfClients);
   });
