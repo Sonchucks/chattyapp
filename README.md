@@ -38,6 +38,7 @@ ChattyApp is a single page web chat application focusing primarily on the client
 ### Your posted message will appear in the chat with your username before it. Each user has a random color assigned to them on connection which persists even when the user changes name.
 
 !["Posted message"](https://github.com/Sonchucks/chattyapp/blob/master/docs/posted-message.png)
+
 !["Persisting username color"](https://github.com/Sonchucks/chattyapp/blob/master/docs/persisting-username-color.png)
 !["Another user connected with a different color assigned"](https://github.com/Sonchucks/chattyapp/blob/master/docs/new-user-connected.png)
 
