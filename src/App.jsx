@@ -8,13 +8,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {username: ""},
+      currentUser: {username: ''},
       messages: [],
       users: 0,
     };
-    if (this.state.currentUser.username === "") {
-      this.state.currentUser.username = "Anonymous";
-    }
     this.socket = new WebSocket(`ws://localhost:3001`);
   }
 
@@ -22,30 +19,32 @@ class App extends Component {
     this.socket.onmessage = (event) => {
       const info = this.state;
       const receivedMsg = JSON.parse(event.data);
-      const messages = [...this.state.messages, receivedMsg];
 
       switch(receivedMsg.type) {
-        case "incomingMessage":
+        case 'incomingMessage':
+          const messages = [...this.state.messages, receivedMsg];
           this.setState({messages: messages});
           break;
-        case "incomingNotification":
-          this.setState({
-            messages: messages
-          });
+        case 'incomingNotification':
+          const notification = [...this.state.messages, receivedMsg];
+          this.setState({messages: notification});
           break;
-        case "numberOfClients":
-          console.log(receivedMsg.usernames);
+        case 'numberOfClients':
           this.setState({users: receivedMsg.users});
           break;
+        case 'currentUsername':
+          console.log(receivedMsg);
+          this.setState({currentUser: {username: receivedMsg.name}});
+          break;
         default:
-          console.log("Unknown event type " + receivedMsg.type);
+          console.log('Unknown event type ' + receivedMsg.type);
       }
     };
   }
 
   addMessage = (message) => {
     const newMessage = {
-      type: "postMessage",
+      type: 'postMessage',
       username: message.username,
       content: message.content
     };
@@ -53,13 +52,12 @@ class App extends Component {
   }
 
   newUser = (user) => {
-    let currentUser = this.state.currentUser.username;
+    const currentUser = this.state.currentUser.username;
     const updateUser = {
-      type: "postNotification",
+      type: 'postNotification',
       username: user,
       content: `${currentUser} has changed their name to  ${user}`
     }
-    this.setState({currentUser: {username: user}});
     this.socket.send(JSON.stringify(updateUser));
   }
 
@@ -69,15 +67,15 @@ class App extends Component {
     const users = this.state.users;
 
     return (
-    <div>
-      <NavigationBar users={users} />
-      <MessageList message={message} />
-      <ChatBar
-        user={currentUser}
-        addMessage={this.addMessage}
-        newUser={this.newUser}
-      />
-    </div>
+      <div>
+        <NavigationBar users={users} />
+        <MessageList message={message} />
+        <ChatBar
+          user={currentUser}
+          addMessage={this.addMessage}
+          newUser={this.newUser}
+        />
+      </div>
     );
   }
 }
