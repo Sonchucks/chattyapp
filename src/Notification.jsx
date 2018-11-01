@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 function Notification({message}) {
   return (
-    <div className="notification" key={message.id}>
+    <div className="notification">
       <span className="notification-content">{message.content}</span>
     </div>
   )

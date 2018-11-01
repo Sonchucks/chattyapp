@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 function Message({message}) {
   return (
-    <div className="message" key={message.id}>
+    <div className="message">
       <span className="message-username" style={{color:message.color}}>{message.username}</span>
       <span className="message-content">{message.content}</span>
     </div>

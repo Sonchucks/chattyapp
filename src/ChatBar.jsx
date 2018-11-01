@@ -43,6 +43,7 @@ class ChatBar extends Component {
       } else {
         this.props.newUser(username);
         this.setState({username: ''});
+        this.refs.messageInput.focus();
       }
     }
   };
@@ -60,6 +61,7 @@ class ChatBar extends Component {
           />
           <input
             className="chatbar-message"
+            ref="messageInput"
             type="text"
             placeholder="Type a message and hit ENTER"
             value={this.state.content}

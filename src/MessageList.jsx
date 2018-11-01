@@ -7,12 +7,12 @@ function MessageList({message}) {
     switch (message.type) {
       case 'incomingNotification':
         return (
-          <Notification message={message} />
+          <Notification message={message} key={message.id} />
         );
         break;
       case 'incomingMessage':
         return (
-          <Message message={message} />
+          <Message message={message} key={message.id} />
         );
         break;
       default:
