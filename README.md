@@ -27,6 +27,7 @@ ChattyApp is a single page web chat application focusing primarily on the client
 
 !["New username entered into field"](https://github.com/Sonchucks/chattyapp/blob/master/docs/new-name.png)
 !["Username field after clicking 'Enter'"](https://github.com/Sonchucks/chattyapp/blob/master/docs/new-name-as-placeholder.png)
+
 !["Notification message of updated username"](https://github.com/Sonchucks/chattyapp/blob/master/docs/notification-message.png)
 
 ### Can enter a text in the message input field and click the 'Enter' key to post the message.
