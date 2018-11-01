@@ -20,6 +20,8 @@ class ChatBar extends Component {
     this.setState({content: event.target.value});
   };
 
+  // Validates input field making sure users aren't just inputting empty fields or fields with just whitespace
+
   inputValidation = (input) => {
     if (input.trim() === '') {
       return true;
@@ -28,6 +30,8 @@ class ChatBar extends Component {
 
     }
   };
+
+  // Called when user clicks enter in the message field
 
   onSubmit = (event) => {
     if (event.key === 'Enter') {
@@ -45,6 +49,8 @@ class ChatBar extends Component {
       }
     }
   };
+
+  // Called when user clicks enter in the username field
 
   newName = (event) => {
     const username = this.state.username;
