@@ -40,7 +40,17 @@ class App extends Component {
           console.log('Unknown event type ' + receivedMsg.type);
       }
     };
+    this.scrollToBottom();
   }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
 
   addMessage = (message) => {
     const newMessage = {
@@ -70,6 +80,9 @@ class App extends Component {
       <div>
         <NavigationBar users={users} />
         <MessageList message={message} />
+      <div style={{ float:"left", clear: "both" }}
+        ref={(element) => { this.messagesEnd = element; }}>
+      </div>
         <ChatBar
           user={currentUser}
           addMessage={this.addMessage}
