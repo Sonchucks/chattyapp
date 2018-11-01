@@ -85,9 +85,9 @@ class App extends Component {
       <div>
         <NavigationBar users={users} />
         <MessageList message={message} />
-      <div style={{ float:"left", clear: "both" }}
-        ref={(element) => { this.messagesEnd = element; }}>
-      </div>
+        <div style={{ float:"left", clear: "both" }}
+          ref={(element) => { this.messagesEnd = element; }}>
+        </div>
         <ChatBar
           user={currentUser}
           addMessage={this.addMessage}
