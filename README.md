@@ -1,45 +1,76 @@
-React Boilerplate
-=====================
+# ChattyAPP
 
-A minimal and light dev environment for ReactJS.
+ChattyApp is a single page web chat application focusing primarily on the client-side experience and built with ReactJS.
 
-### Usage
+## Stack
+- Webpack
+  - Babel
+  - JSX
+  - ES6
+  - Webpack Dev Server (came with boilerplate)
+- WebSockets
+  - Node Package `ws` server-side
+  - Native `WebSocket` client-side
+- ReactJS
 
-Clone the boilerplate and create your own git repo.
+## Final Product
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+### What you'll see when you first load the page.
 
-Install the dependencies and start the server.
+!["Initial look of ChattyApp"]()
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+### Username is automatically set to Anonymous.
 
-### Static Files
+!["Username field default"]()
 
-You can store static files like images, fonts, etc in the `build` folder.
+### Can enter a new username and click the 'Enter' key to update. The current username will become the placeholder of the field along with a notification message appearing in the chat.
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+!["New username entered into field"]()
+!["Username field after clicking 'Enter'"]()
 
-### Linting
+### Can enter a text in the message input field and click the 'Enter' key to post the message.
 
-This boilerplate project includes React ESLint configuration.
+!["Empty message input field"]()
+!["Message input field with a value"]()
 
-```
-npm run lint
-```
+### Your posted message will appear in the chat with your username before it. Each user has a random color assigned to them on connection which persists even when the user changes name.
 
-### Dependencies
+!["Posted message"]()
+!["Persisting username color"]()
+!["Another user connected with a different color assigned"]()
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+### The amount of users that are connected will be displayed in the top right hand corner and will update as soon as a new user connects.
+
+!["Number of users online"]()
+
+### You will get an alert error message if you ever try to submit an empty field or a field with only spaces.
+
+!["Error for empty message"]()
+!["Error for empty username"]()
+
+## Dependencies
+
+### Client Side
+
+- Babel (Core, Loader, es2015, react, stage-0)
+- CSS Loader
+- ESLint
+- Node SASS
+- SASS Loader
+- SockJS-Client
+- Style Loader
+- WebPack
+
+### Server Side
+
+- Express
+- UUID
+- WebSocket
+
+## Getting Started
+
+- Open up two terminals, one for the client side and one for the server.
+  - Server folder (chatty_server) is located inside the root folder.
+- Make sure to install all the dependencies using the npm install command for both.
+- Run the both servers using `npm start` command.
+- Open up your broswer and connect to http://0.0.0.0:3000.
