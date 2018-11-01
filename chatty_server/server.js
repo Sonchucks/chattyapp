@@ -38,6 +38,21 @@ const removeClient = ( ws ) => {
   delete clients[clientID];
 };
 
+const updateUser = (username, ws) => {
+  clients[ws.clientID].username = username;
+};
+
+const usernameList = (ws) => {
+  const usernames = [];
+  const ID = Object.keys(clients);
+
+  ID.map(element => {
+    usernames.push(clients[element].username);
+  });
+
+  return usernames;
+};
+
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     client.send(JSON.stringify(data));
@@ -49,13 +64,13 @@ wss.broadcast = function broadcast(data) {
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
-
+  addNewClient(ws);
   let numberOfClients = {
     type: "numberOfClients",
-    users: Object.keys(clients).length + 1,
+    usernames: usernameList(ws),
+    users: Object.keys(clients).length,
   };
 
-  addNewClient(ws);
   wss.broadcast(numberOfClients);
 
   ws.on('message', function incoming(message) {
@@ -70,7 +85,10 @@ wss.on('connection', (ws) => {
         wss.broadcast(receivedMsg);
         break;
       case 'postNotification':
+        const newUsername = receivedMsg.username;
+        updateUser(newUsername, ws);
         receivedMsg.type = "incomingNotification";
+        delete receivedMsg.username;
         wss.broadcast(receivedMsg);
         break;
       default:

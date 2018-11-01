@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
-import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 
 
@@ -29,9 +28,12 @@ class App extends Component {
           this.setState({messages: messages});
           break;
         case "incomingNotification":
-          this.setState({messages: messages});
+          this.setState({
+            messages: messages
+          });
           break;
         case "numberOfClients":
+          console.log(receivedMsg.usernames);
           this.setState({users: receivedMsg.users});
           break;
         default:
@@ -51,12 +53,13 @@ class App extends Component {
 
   newUser = (user) => {
     let currentUser = this.state.currentUser.username;
-    const newUser = {
+    const updateUser = {
       type: "postNotification",
+      username: user,
       content: `${currentUser} has changed their name to  ${user}`
     }
-    this.setState({currentUser: {username: user}})
-    this.socket.send(JSON.stringify(newUser));
+    this.setState({currentUser: {username: user}});
+    this.socket.send(JSON.stringify(updateUser));
   }
 
   render() {

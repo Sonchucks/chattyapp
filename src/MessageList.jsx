@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Message from './Message.jsx';
+import Notification from './Notification.jsx';
 
 class MessageList extends Component {
   render() {
@@ -8,17 +10,12 @@ class MessageList extends Component {
       switch (message.type) {
         case 'incomingNotification':
           return (
-            <div className="notification" key={message.id}>
-              <span className="notification-content">{message.content}</span>
-            </div>
+            <Notification message={message} />
           )
           break;
         case 'incomingMessage':
           return (
-            <div className="message" key={message.id}>
-              <span className="message-username" style={{color:message.color}}>{message.username}</span>
-              <span className="message-content">{message.content}</span>
-            </div>
+            <Message message={message} />
           )
           break;
         default:

@@ -1,22 +1,12 @@
 import React, {Component} from 'react';
 
-class Message extends Component {
-  render() {
-    return (
-      <div className="message system">
-        Anonymous1 changed their name to nomnom.
-      </div>
-    );
-  }
+function Message({message}) {
+  return (
+    <div className="message" key={message.id}>
+      <span className="message-username" style={{color:message.color}}>{message.username}</span>
+      <span className="message-content">{message.content}</span>
+    </div>
+  )
 }
 
 export default Message;
-
-
-
-// import React, {Component} from 'react';
-
-// class Message extends Component {
-
-
-// }
