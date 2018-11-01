@@ -73,6 +73,8 @@ const setClientName = (input) => {
   return clientName;
 };
 
+// Generates the number of users connected to broadcast to all users
+
 const numberOfUsers = () => {
   const numberOfClients = {
     type: 'numberOfClients',

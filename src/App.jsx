@@ -43,14 +43,17 @@ class App extends Component {
     this.scrollToBottom();
   }
 
-  scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-  }
-
   componentDidUpdate() {
     this.scrollToBottom();
   }
 
+  // Function when called, scrolls to div with reference messagesEnd
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
+  // Takes the message entered in the message field of the ChatBar and sends it to the server
 
   addMessage = (message) => {
     const newMessage = {
@@ -60,6 +63,8 @@ class App extends Component {
     };
     this.socket.send(JSON.stringify(newMessage));
   }
+
+  // Takes the username entered in the username field of the Chatbar and sends it to the server
 
   newUser = (user) => {
     const currentUser = this.state.currentUser.username;
