@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import NavigationBar from './NavBar.jsx';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
@@ -67,22 +68,10 @@ class App extends Component {
     const message = this.state.messages;
     const users = this.state.users;
 
-    let messages;
-    if (this.state.loading) {
-      messages = <h1>Loading Messages...</h1>;
-    } else {
-      messages = <MessageList message={message} />
-    }
-
     return (
     <div>
-      <nav className="navbar">
-        <a href="/" className="navbar-brand">Chatty</a>
-        <span className="users-online">Users Online: {users}</span>
-      </nav>
-      <main className="messages">
-        {messages}
-      </main>
+      <NavigationBar users={users} />
+      <MessageList message={message} />
       <ChatBar
         user={currentUser}
         addMessage={this.addMessage}
