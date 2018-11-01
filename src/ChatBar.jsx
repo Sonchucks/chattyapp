@@ -62,9 +62,9 @@ class ChatBar extends Component {
 
   render() {
     return (
-        <footer className="chatbar">
+        <footer className='chatbar'>
           <input
-            className="chatbar-username"
+            className='chatbar-username'
             type='text'
             placeholder={this.props.user}
             value={this.state.username}
@@ -72,10 +72,10 @@ class ChatBar extends Component {
             onKeyPress={this.newName}
           />
           <input
-            className="chatbar-message"
-            ref="messageInput"
-            type="text"
-            placeholder="Type a message and hit ENTER"
+            className='chatbar-message'
+            ref='messageInput'
+            type='text'
+            placeholder='Type a message and hit ENTER'
             value={this.state.content}
             onChange={this.contentChange}
             onKeyPress={this.onSubmit}

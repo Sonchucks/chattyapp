@@ -20,7 +20,7 @@ function MessageList({message}) {
     }
   });
   return (
-    <main className="messages">
+    <main className='messages'>
       {listMessages}
     </main>
   );
@@ -28,6 +28,3 @@ function MessageList({message}) {
 
 
 export default MessageList;
-
-
-
